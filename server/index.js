@@ -141,7 +141,7 @@ function createIfNotExists(res, object) {
         });
 
         stmt += ");";
-        console.log(stmt);
+        tables.push(res);
     }
 
     return stmt;
