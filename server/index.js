@@ -36,28 +36,43 @@ app.listen(9000, function () {
     console.log('listening on 9000')
 });
 
+app.get('/api/tables', (req, res) => {
+    res.send(tables);
+});
 
 app.get('/api/:res/:id?', (req, res) => {
-    var resource = req.params.res,
-        id = req.params.id;
+    var resource = getResourceName(req.params.res),
+        id = req.params.id,
+        size = req.query.limit || limit,
+        page = req.query.page,
+        stmt;
 
     if (!id) {
-        db.all('SELECT * FROM ' + resource + ' LIMIT ' + limit, (err, data) => {
+        stmt = 'SELECT * FROM ' + resource + ' LIMIT ' + size;
+        if (page) {
+            stmt += ' OFFSET ' + (page * size);
+        }
+        db.all(stmt, (err, data) => {
             res.send(data);
         });
     } else {
-        var stmt = 'SELECT * FROM ' + resource + ' WHERE id=' + id + ';';
+        stmt = 'SELECT * FROM ' + resource + ' WHERE id=' + id + ';';
         db.get(stmt, (err, data) => {
-            console.log(err, data);
             res.send(data);
         });
     }
 });
 
-app.delete('/api/:res/:id', (req, res) => {
-    var resource = req.params.res,
+app.delete('/api/:res/:id?', (req, res) => {
+    var resource = getResourceName(req.params.res),
         id = req.params.id,
+        stmt;
+
+    if (id) {
         stmt = 'DELETE FROM ' + resource + ' WHERE id=' + id + ';';
+    } else {
+        stmt = 'DROP TABLE ' + resource;
+    }
 
     db.run(stmt, (err, data) => {
         res.send('ok');
@@ -66,7 +81,7 @@ app.delete('/api/:res/:id', (req, res) => {
 
 app.patch('/api/:res/:id', (req, res) => {
     var body = req.body,
-        resource = req.params.res,
+        resource = getResourceName(req.params.res),
         id = req.params.id,
         updateValues;
 
@@ -96,7 +111,7 @@ app.patch('/api/:res/:id', (req, res) => {
 
 app.put('/api/:res', (req, res) => {
     var body = req.body,
-        resource = req.params.res;
+        resource = getResourceName(req.params.res);
 
     db.serialize(function () {
         stmt = createIfNotExists(resource, body);
@@ -145,4 +160,12 @@ function createIfNotExists(res, object) {
     }
 
     return stmt;
+}
+
+function getResourceName(value) {
+    if (value) {
+        return value.toLowerCase();
+    }
+
+    return value;
 }

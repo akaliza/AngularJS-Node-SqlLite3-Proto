@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jquery": "2.1.4",
     "angular": "^1.5.7",
     "angular-messages": "^1.5.8",
     "angular-translate": "^2.11.0",
@@ -26,6 +25,7 @@
     "gulp-livereload": "^3.8.1",
     "gulp-order": "^1.1.1",
     "gulp-watch": "^4.3.8",
+    "jquery": "2.1.4",
     "less": "^2.7.1",
     "path": "^0.12.7",
     "q": "^1.4.1",
