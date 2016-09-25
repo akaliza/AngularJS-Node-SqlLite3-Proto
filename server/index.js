@@ -31,6 +31,12 @@ db.each("SELECT name FROM sqlite_master WHERE type = 'table'", (err, data) => {
 
 // API CONFIGURATION
 var app = express();
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'GET, OPTIONS, PUT, DELETE, PATCH, POST');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use(bodyParser.json()); // for parsing application/json
 app.listen(9000, function () {
     console.log('listening on 9000')
@@ -129,6 +135,7 @@ app.put('/api/:res', (req, res) => {
         run += ');';
 
         db.run(run, (err, data) => {
+            console.log(err, data);
             res.send(data);
         });
     });

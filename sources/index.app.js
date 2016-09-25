@@ -4,7 +4,7 @@ var app = angular.module('app',
         'ngMessages',
         'pascalprecht.translate',
 
-        'feature'
+        'app.feature'
     ]);
 
 app

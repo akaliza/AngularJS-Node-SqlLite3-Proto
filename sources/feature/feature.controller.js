@@ -1,12 +1,30 @@
-angular.module('feature').controller('FeatureController', FeatureController);
+angular.module('app.feature').controller('FeatureController', FeatureController);
 
-FeatureController.$inject = [];
+FeatureController.$inject = ['FeaturesService'];
 
-function FeatureController() {
+function FeatureController(FeaturesService) {
 
     let vm = this;
 
-    vm.message = 'Feature';
+    vm.list = [];
+    vm.feature = {};
+
+    FeaturesService.list().then((data) => {
+        vm.list = data;
+    });
+
+    vm.submitFeature = function (form) {
+        form.$setSubmitted(true);
+        if (form.$valid) {
+            var promise = FeaturesService.store(vm.feature);
+            promise.then(() => {
+                vm.list.push(vm.feature);
+                vm.feature = {};
+                form.$submitted = false;
+            });
+        }
+    };
+
 
     return vm;
 }

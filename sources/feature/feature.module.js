@@ -1,5 +1,5 @@
 
-let featureModule = angular.module('feature', []);
+let featureModule = angular.module('app.feature', []);
 
 featureModule.config(['$stateProvider', ($stateProvider) => {
     $stateProvider

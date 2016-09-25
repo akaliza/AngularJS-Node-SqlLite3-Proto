@@ -1,1 +1,55 @@
-<h1>{{vm.message}}</h1>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h2>Add Feature</h2>
+        <form name="addFeature"
+              ng-submit="vm.submitFeature(addFeature)"
+              novalidate>
+
+            <div class="form-group">
+                <label for="featureName">Feature Name</label>
+                <input name="featureName"
+                       class="form-control"
+                       id="featureName"
+                       required
+                       ng-model="vm.feature.name">
+                <div ng-messages for="addFeature.featureName.$error"
+                     class="alert alert-danger"
+                     ng-if="addFeature.$submitted && addFeature.featureName.$invalid">
+                    <ng-message when="required">Mandatory Field</ng-message>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="popularity">Popularity (%)</label>
+                <input name="popularity"
+                       class="form-control"
+                       id="popularity"
+                       type="number"
+                       ng-min="0"
+                       ng-max="100"
+                       required
+                       ng-model="vm.feature.popularity">
+                <div ng-messages for="addFeature.popularity.$error"
+                     class="alert alert-danger"
+                     ng-if="addFeature.$submitted && addFeature.popularity.$invalid">
+                    <ng-message when="required">Mandatory Field</ng-message>
+                    <ng-message when="min">Minimum value is 0</ng-message>
+                    <ng-message when="max">Maximum value is 100</ng-message>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Add"/>
+            </div>
+        </form>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h2>Features:</h2>
+        <table class="table table-striped">
+            <tr ng-repeat="feature in vm.list">
+                <td>{{feature.name}}</td>
+                <td>{{feature.popularity}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
