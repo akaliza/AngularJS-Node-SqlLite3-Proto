@@ -31,7 +31,7 @@ db.each("SELECT name FROM sqlite_master WHERE type = 'table'", (err, data) => {
 
 // API CONFIGURATION
 var app = express();
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'GET, OPTIONS, PUT, DELETE, PATCH, POST');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -54,10 +54,24 @@ app.get('/api/:res/:id?', (req, res) => {
         stmt;
 
     if (!id) {
-        stmt = 'SELECT * FROM ' + resource + ' LIMIT ' + size;
+        var where = '';
+        Object.keys(req.query).forEach((key) => {
+            if (key !== 'limit' && key !== 'page') {
+                if (where.length > 0) {
+                    where += ' AND ';
+                } else {
+                    where += ' WHERE ';
+                }
+
+                where += key + ' = ' + getValueTypeForData(req.query[key]);
+
+            }
+        });
+        stmt = 'SELECT * FROM ' + resource + ' ' + where + ' LIMIT ' + size;
         if (page) {
             stmt += ' OFFSET ' + (page * size);
         }
+        console.log(stmt);
         db.all(stmt, (err, data) => {
             res.send(data);
         });
