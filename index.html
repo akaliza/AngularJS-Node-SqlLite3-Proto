@@ -1,4 +1,4 @@
-<html ng-app="app">
+<html ng-app="craining">
 
 <head lang="en">
     <meta charset="utf-8">
@@ -9,20 +9,23 @@
 </head>
 
 <body>
-<div class="container-fluid">
-    <span ui-view></span>
+
+<div class="container-fluid"
+     ng-include="'sources/craining.template.html'">
+
 </div>
 
 
 <!-- application scripts -->
 <!-- app:js -->
 <script src="./assets/libs.js?1.0.0"></script>
-<script src="./sources/i18n/language_en.static.js?1.0.0"></script>
 <script src="./sources/index.app.js?1.0.0"></script>
-<script src="./sources/feature/feature.module.js?1.0.0"></script>
-<script src="./sources/feature/feature.controller.js?1.0.0"></script>
-<script src="./sources/feature/feature.service.js?1.0.0"></script>
-<script src="./sources/shared/services/api.service.js?1.0.0"></script>
+<script src="./sources/participants/participants.module.js?1.0.0"></script>
+<script src="./sources/shared/shared.module.js?1.0.0"></script>
+<script src="./sources/craining.controller.js?1.0.0"></script>
+<script src="./sources/participants/add/add.participant.controller.js?1.0.0"></script>
+<script src="./sources/participants/list/list.participants.controller.js?1.0.0"></script>
+<script src="./sources/shared/services/storage.service.js?1.0.0"></script>
 <!-- endinject -->
 
 </body>
