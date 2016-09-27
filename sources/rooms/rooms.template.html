@@ -1,0 +1,58 @@
+<span>
+
+    <div class="well">
+        <span class="col-xs-12 col-sm-6">
+
+            <div class="form-group">
+                <label for="name">Name: </label>
+                <input type="text" id="name" name="name"
+                       ng-model="room.name">
+            </div>
+        </span>
+         <span class="col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label for="seats">Seats: </label>
+                <input type="number" id="seats" name="seats"
+                       ng-model="room.seats">
+            </div>
+        </span>
+        <span class="pull-right btn btn-info"
+              ng-click="addRoom()"
+              ng-hide="room.id">Add</span>
+
+        <span ng-hide="!room.id">
+            <span class="pull-right btn btn-info"
+                  ng-click="updateRoom()">Save</span>
+
+            <span class="pull-right btn btn-default"
+                  ng-click="cancel()">Cancel</span>
+        </span>
+
+        <div class="clearfix"></div>
+
+    </div>
+    <hr>
+    <h3>List</h3>
+    <table class="table table-hover table-striped">
+        <thead>
+        <th>Name</th>
+        <th>Seats</th>
+        <th>Action</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in rooms">
+            <td>{{item.name}}</td>
+            <td>{{item.seats}}</td>
+            <td>
+                <span class="btn btn-danger" ng-click="deleteRoom(item)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </span>
+                <span class="btn btn-info" ng-click="selectRoom(item)">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</span>

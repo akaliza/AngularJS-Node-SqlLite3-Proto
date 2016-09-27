@@ -71,7 +71,6 @@ app.get('/api/:res/:id?', (req, res) => {
         if (page) {
             stmt += ' OFFSET ' + (page * size);
         }
-        console.log(stmt);
         db.all(stmt, (err, data) => {
             res.send(data);
         });
@@ -149,7 +148,6 @@ app.put('/api/:res', (req, res) => {
         run += ');';
 
         db.run(run, (err, data) => {
-            console.log(err, data);
             res.send(data);
         });
     });

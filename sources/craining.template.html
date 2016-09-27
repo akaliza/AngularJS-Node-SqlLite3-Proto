@@ -1,10 +1,8 @@
-<span ng-controller="CrainingController">
-    <span class="btn btn-primary"
-          ng-click="switchTo(1)">Add</span>
-
-    <span class="btn btn-primary"
-          ng-click="switchTo(2)">List</span>
-
-    <div ng-include="state"></div>
-
+<span>
+    <div class="well">
+        <a>Rooms</a> |
+        <a ui-sref="main.participants.list">People</a> |
+        <a>Schedule</a>
+    </div>
+    <div ui-view></div>
 </span>

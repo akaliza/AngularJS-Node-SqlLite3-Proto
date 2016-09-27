@@ -3,13 +3,25 @@ angular.module('craining.participants')
         'ParticipantsListController',
         ParticipantsListController);
 
-ParticipantsListController.$inject = ['StorageService', '$scope'];
+ParticipantsListController.$inject = ['ParticipantsService', '$scope'];
 
-function ParticipantsListController(StorageService, $scope) {
-    $scope.list = StorageService.getData('participants');
+function ParticipantsListController(ParticipantsService, $scope) {
 
+    function initialization() {
+        ParticipantsService.getParticipants()
+            .then(
+                function (data) {
+                    $scope.list = data;
+                });
+    }
 
-    $scope.remove = function (index) {
-        $scope.list.splice(index, 1);
+    initialization();
+
+    $scope.remove = function (item) {
+        ParticipantsService
+            .removeParticipant(item.id)
+            .then(function () {
+                initialization();
+            });
     }
 }

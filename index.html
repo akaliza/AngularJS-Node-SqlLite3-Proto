@@ -9,10 +9,8 @@
 </head>
 
 <body>
-
-<div class="container-fluid"
-     ng-include="'sources/craining.template.html'">
-
+<div class="container-fluid">
+    <div ui-view></div>
 </div>
 
 
@@ -21,11 +19,15 @@
 <script src="./assets/libs.js?1.0.0"></script>
 <script src="./sources/index.app.js?1.0.0"></script>
 <script src="./sources/participants/participants.module.js?1.0.0"></script>
+<script src="./sources/rooms/rooms.module.js?1.0.0"></script>
 <script src="./sources/shared/shared.module.js?1.0.0"></script>
 <script src="./sources/craining.controller.js?1.0.0"></script>
 <script src="./sources/participants/add/add.participant.controller.js?1.0.0"></script>
 <script src="./sources/participants/list/list.participants.controller.js?1.0.0"></script>
-<script src="./sources/shared/services/storage.service.js?1.0.0"></script>
+<script src="./sources/participants/participants.service.js?1.0.0"></script>
+<script src="./sources/rooms/rooms.controller.js?1.0.0"></script>
+<script src="./sources/rooms/rooms.service.js?1.0.0"></script>
+<script src="./sources/shared/services/gateway.service.js?1.0.0"></script>
 <!-- endinject -->
 
 </body>
