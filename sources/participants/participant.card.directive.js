@@ -2,9 +2,9 @@ angular
     .module('craining.participants')
     .directive('userCard', UserCardDirective);
 
-UserCardDirective.$inject = ['ParticipantsService', '$timeout'];
+UserCardDirective.$inject = ['ParticipantsService', '$compile'];
 
-function UserCardDirective(ParticipantsService, $timeout) {
+function UserCardDirective(ParticipantsService, $compile) {
 
     return {
         templateUrl: 'sources/participants/participants.card.template.html',
@@ -15,14 +15,29 @@ function UserCardDirective(ParticipantsService, $timeout) {
         compile: function (elem, attr) {
 
             var canEdit = attr.canEdit !== 'false';
+            var editHtml, buttonsHtml;
 
             if (!canEdit) {
-                $(elem).find('#edit').remove();
-                $(elem).find('#buttons').remove();
+                var editElem = $(elem).find('#edit');
+                editHtml = '<span ng-if="edit">' + editElem.html() + '</span>';
+                editElem.remove();
+
+                var buttonsElem = $(elem).find('#buttons');
+                buttonsHtml = '<span ng-if="edit">' + buttonsElem.html() + '</span>';
+                buttonsElem.remove();
             }
 
             return function ($scope, elem, attr) {
                 var previous;
+
+
+                $scope.$on('bulk', function (event, data) {
+                    $scope.switchEditMode();
+                    var linkFn = $compile(editHtml);
+                    elem.find('.well').append(linkFn($scope));
+
+                    elem.find('.well').append($compile(buttonsHtml)($scope));
+                });
 
                 $scope.canEdit = attr.canEdit !== 'false';
                 $scope.edit = false;

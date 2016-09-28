@@ -5,6 +5,14 @@ CrainingController.$inject = ['$scope'];
 
 function CrainingController($scope) {
 
-console.log("Craining Controller Initialized...")
+    $scope.triggerBulk = function () {
+        $scope.$broadcast('bulk');
+    };
+
+    $scope.$on('cardData', function(event, data){
+        console.log("Received data: ", data);
+    });
+
+    console.log("Craining Controller Initialized...")
 
 }

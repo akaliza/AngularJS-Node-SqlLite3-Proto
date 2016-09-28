@@ -17,6 +17,12 @@ function ParticipantsListController(ParticipantsService, $scope) {
 
     initialization();
 
+    $scope.$on('cardData', function(event, data){
+        //event.preventDefault();
+        event.stopPropagation();
+        console.log("Received data: ", data);
+    });
+
     $scope.remove = function (item) {
         ParticipantsService
             .removeParticipant(item.id)
