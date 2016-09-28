@@ -14,8 +14,6 @@ function UserCardDirective(ParticipantsService, $timeout) {
         },
         compile: function (elem, attr) {
 
-            $scope.title = "CHILD";
-
             var canEdit = attr.canEdit !== 'false';
 
             if (!canEdit) {
