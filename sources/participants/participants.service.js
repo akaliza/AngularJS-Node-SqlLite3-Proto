@@ -10,12 +10,17 @@ function ParticipantsService(GatewayService) {
     this.getParticipants = function (id) {
         var individualize = id ? '/' + id : '';
         return GatewayService
-            .callApi('GET', entity+individualize);
+            .callApi('GET', entity + individualize);
     };
 
     this.addParticipant = function (participant) {
         return GatewayService
             .callApi('PUT', entity, participant)
+    };
+
+    this.updateParticipant = function (participant) {
+        return GatewayService
+            .callApi('PATCH', entity + "/" + participant.id, participant)
     };
 
     this.removeParticipant = function (id) {
