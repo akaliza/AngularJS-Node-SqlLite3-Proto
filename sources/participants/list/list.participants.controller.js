@@ -15,9 +15,15 @@ function ParticipantsListController(ParticipantsService, $scope) {
                 });
     }
 
+    $scope.$watch(function() {
+        return $scope.someinput && $scope.someinput.toLowerCase() === 'awesome';
+    }, function (newVal, oldVal) {
+        $scope.showme = newVal;
+    });
+
     initialization();
 
-    $scope.$on('cardData', function(event, data){
+    $scope.$on('cardData', function (event, data) {
         //event.preventDefault();
         event.stopPropagation();
         console.log("Received data: ", data);

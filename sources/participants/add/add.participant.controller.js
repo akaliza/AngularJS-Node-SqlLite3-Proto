@@ -18,6 +18,11 @@ function ParticipantsController($scope, storage, participant, $state) {
                 $state.go('main.participants.list');
             }
         );
+    };
+
+    $scope.parentSaveFunction = function(param) {
+        console.log('Parent Save Function Called with: ', param);
+        $scope.model.name = param;
     }
 
 }
