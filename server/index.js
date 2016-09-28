@@ -24,10 +24,12 @@ const db = new sqlite3.Database(file);
 
 /// SELECT name FROM my_db.sqlite_master WHERE type='table';
 var tables = [];
-db.each("SELECT name FROM sqlite_master WHERE type = 'table'", (err, data) => {
-    tables.push(data.name);
-});
+//db.each("SELECT name FROM sqlite_master WHERE type = 'table'", (err, data) => {
+//    tables.push(data.name);
+//});
 
+db.each("SELECT name FROM sqlite_master WHERE type = 'table'", function(err, data) {
+    tables.push(data.name);});
 
 // API CONFIGURATION
 var app = express();
@@ -42,11 +44,11 @@ app.listen(9000, function () {
     console.log('listening on 9000')
 });
 
-app.get('/api/tables', (req, res) => {
+app.get('/api/tables', function(req, res)  {
     res.send(tables);
 });
 
-app.get('/api/:res/:id?', (req, res) => {
+app.get('/api/:res/:id?', function (req, res)  {
     var resource = getResourceName(req.params.res),
         id = req.params.id,
         size = req.query.limit || limit,
@@ -55,7 +57,7 @@ app.get('/api/:res/:id?', (req, res) => {
 
     if (!id) {
         var where = '';
-        Object.keys(req.query).forEach((key) => {
+        Object.keys(req.query).forEach(function(key) {
             if (key !== 'limit' && key !== 'page') {
                 if (where.length > 0) {
                     where += ' AND ';
@@ -71,18 +73,18 @@ app.get('/api/:res/:id?', (req, res) => {
         if (page) {
             stmt += ' OFFSET ' + (page * size);
         }
-        db.all(stmt, (err, data) => {
+        db.all(stmt, function (err, data) {
             res.send(data);
         });
     } else {
         stmt = 'SELECT * FROM ' + resource + ' WHERE id=' + id + ';';
-        db.get(stmt, (err, data) => {
+        db.get(stmt,function (err, data)  {
             res.send(data);
         });
     }
 });
 
-app.delete('/api/:res/:id?', (req, res) => {
+app.delete('/api/:res/:id?', function(req, res)  {
     var resource = getResourceName(req.params.res),
         id = req.params.id,
         stmt;
@@ -93,18 +95,18 @@ app.delete('/api/:res/:id?', (req, res) => {
         stmt = 'DROP TABLE ' + resource;
     }
 
-    db.run(stmt, (err, data) => {
+    db.run(stmt, function(err, data)  {
         res.send('ok');
     });
 });
 
-app.patch('/api/:res/:id', (req, res) => {
+app.patch('/api/:res/:id', function(req, res) {
     var body = req.body,
         resource = getResourceName(req.params.res),
         id = req.params.id,
         updateValues;
 
-    Object.keys(body).forEach((key) => {
+    Object.keys(body).forEach(function(key)  {
         if (key !== 'id') {
             if (updateValues) {
                 updateValues = updateValues
@@ -123,12 +125,12 @@ app.patch('/api/:res/:id', (req, res) => {
 
     var stmt = "UPDATE " + resource + " SET  " + updateValues + " WHERE id=" + id + ";";
 
-    db.run(stmt, (err, data) => {
+    db.run(stmt, function (err, data) {
         res.send('ok');
     });
 });
 
-app.put('/api/:res', (req, res) => {
+app.put('/api/:res',function (req, res) {
     var body = req.body,
         resource = getResourceName(req.params.res);
 
@@ -141,13 +143,13 @@ app.put('/api/:res', (req, res) => {
 
         var run = "INSERT INTO " + resource + " VALUES (null";
 
-        Object.keys(body).forEach((key) => {
+        Object.keys(body).forEach(function(key)  {
             run += ',' + getValueTypeForData(body[key]);
         });
 
         run += ');';
 
-        db.run(run, (err, data) => {
+        db.run(run, function(err, data)  {
             res.send(data);
         });
     });
@@ -170,7 +172,7 @@ function createIfNotExists(res, object) {
     if (tables.indexOf(res) === -1) {
         stmt = "CREATE TABLE " + res + "(id INTEGER PRIMARY KEY   AUTOINCREMENT";
 
-        Object.keys(object).forEach((key) => {
+        Object.keys(object).forEach(function(key) {
             stmt += "," + key + " " + typeMap[typeof object[key]];
         });
 

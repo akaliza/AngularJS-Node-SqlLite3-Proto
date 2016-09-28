@@ -20,7 +20,9 @@ function RoomsController($scope, RoomsService) {
     };
 
     $scope.addRoom = function () {
+        console.log('flore...');
         RoomsService.addRoom($scope.room).then(
+
             function () {
                 initialize();
             }

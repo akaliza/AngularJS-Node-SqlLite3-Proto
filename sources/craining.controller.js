@@ -6,6 +6,8 @@ CrainingController.$inject = ['$scope'];
 function CrainingController($scope) {
 
     $scope.triggerBulk = function () {
+        console.log("bulk... ");
+
         $scope.$broadcast('bulk');
     };
 
