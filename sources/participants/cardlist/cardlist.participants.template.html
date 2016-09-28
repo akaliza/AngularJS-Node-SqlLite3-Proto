@@ -1,9 +1,16 @@
 <span class="row">
-
-    <div class="col-xs-6"
-         ng-repeat="card in list">
-
-        <span user-card card="card" can-edit="false"></span>
+    <div class="col-xs-12">
+      <b>Hide</b>:
+        <input type="checkbox" ng-model="hide"> {{hide}}
     </div>
+    <span our-switch="hide">
+        <div class="col-xs-6"
+             ng-repeat="card in list">
+
+            <span user-card
+                  card="card"
+                  can-edit="false"></span>
+        </div>
+    </span>
 
 </span>
