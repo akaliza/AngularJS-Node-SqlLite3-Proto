@@ -1,3 +1,19 @@
+Enabled?: <input type="checkbox" ng-model="enabled">
+
+<button ng-click="printSomething('button')"
+        ng-disabled="!enabled">Print Something</button>
+
+<span class="btn btn-info"
+      ng-click="printSomething('span')"
+      ng-disabled="!enabled">Print Something</span>
+
+<span class="btn btn-info ng-scope"
+      ng-click="!(!enabled) && printSomething('span')"
+      >Print Something</span>
+<br>
+
+<img src="http://static1.gamespot.com/uploads/original/1179/11799911/2901754-futurama.jpg" />
+<img src="http://1.images.comedycentral.com/images/shows/Futurama/Videos/season_1/futurama_01_0102_zoidberg_physical_640x360.jpg?width=1200&height=630&crop=true" />
 <form>
     <div class="form-group">
         <label for="userName">Name</label>
@@ -36,11 +52,16 @@
 
 <div class="clearfix"></div>
 
+<h3>below</h3>
+<card-component `="model"></card-component>
+<hr>
+
 <span user-card card="model" can-edit="false"></span>
+<hr>
 
 <div dummy-directive
      name="{{model.name}}"
-     save-function="parentSaveFunction(param)"></div>
+     save-function="parentSaveFunction(other, a)"></div>
 
 
 

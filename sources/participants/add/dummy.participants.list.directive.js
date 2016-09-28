@@ -12,7 +12,8 @@ function DummyDirective() {
             <div>
                 <input ng-model="name">
                 <span class="btn btn-info"
-                       ng-click="saveFunction({a: true, param: name})">Save</span>
+                       ng-click=
+   "saveFunction({a: true, other: name})">Save</span>
             </div>
         `,
         scope: {

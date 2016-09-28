@@ -14,14 +14,19 @@ function ParticipantsController($scope, storage, participant, $state) {
     $scope.save = function () {
         storage
             .addParticipant($scope.model).then(
-            function(data) {
+            function (data) {
                 $state.go('main.participants.list');
             }
         );
     };
 
-    $scope.parentSaveFunction = function(param) {
-        console.log('Parent Save Function Called with: ', param);
+    $scope.enabled = true;
+    $scope.printSomething = function (from) {
+        console.log("printSomething from", from);
+    };
+
+    $scope.parentSaveFunction = function (param, bool) {
+        console.log('Parent Save Function Called with: ', bool, param);
         $scope.model.name = param;
     }
 
