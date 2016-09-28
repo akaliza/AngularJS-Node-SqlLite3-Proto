@@ -9,6 +9,8 @@ function ParticipantsController($scope, storage, participant, $state) {
 
     $scope.model = participant;
 
+    $scope.title = "PARENT";
+
     $scope.save = function () {
         storage
             .addParticipant($scope.model).then(

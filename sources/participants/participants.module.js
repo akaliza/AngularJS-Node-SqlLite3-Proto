@@ -1,3 +1,4 @@
+
 angular
     .module('craining.participants', ['shared'])
     .config(function ($stateProvider) {

@@ -2,37 +2,50 @@ angular
     .module('craining.participants')
     .directive('userCard', UserCardDirective);
 
-UserCardDirective.$inject = ['ParticipantsService'];
+UserCardDirective.$inject = ['ParticipantsService', '$timeout'];
 
-function UserCardDirective(ParticipantsService) {
-
+function UserCardDirective(ParticipantsService, $timeout) {
 
     return {
         templateUrl: 'sources/participants/participants.card.template.html',
+        transclude: true,
         scope: {
             card: '='
         },
-        link: function ($scope, elem, attr) {
+        compile: function (elem, attr) {
 
-            var previous;
-            $scope.edit = false;
+            $scope.title = "CHILD";
 
-            $scope.switchEditMode = function () {
-                if (!$scope.edit) {
-                    previous = angular.copy($scope.card);
-                } else {
-                    $scope.card = previous;
-                }
+            var canEdit = attr.canEdit !== 'false';
 
-                $scope.edit = !$scope.edit;
-            };
+            if (!canEdit) {
+                $(elem).find('#edit').remove();
+                $(elem).find('#buttons').remove();
+            }
 
-            $scope.save = function () {
-                ParticipantsService.updateParticipant($scope.card).then(
-                    function () {
-                        $scope.edit = false;
+            return function ($scope, elem, attr) {
+                var previous;
+
+                $scope.canEdit = attr.canEdit !== 'false';
+                $scope.edit = false;
+
+                $scope.switchEditMode = function () {
+                    if (!$scope.edit) {
+                        previous = angular.copy($scope.card);
+                    } else {
+                        $scope.card = previous;
                     }
-                )
+
+                    $scope.edit = !$scope.edit;
+                };
+
+                $scope.save = function () {
+                    ParticipantsService.updateParticipant($scope.card).then(
+                        function () {
+                            $scope.edit = false;
+                        }
+                    )
+                }
             }
 
         }

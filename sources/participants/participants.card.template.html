@@ -1,17 +1,18 @@
 <div class="well">
-    <span ng-show="!edit">
+    <span ng-transclude></span>
+    <span id="view" ng-if="!edit">
         <h3>{{card.name}} {{card.surname}}</h3>
         {{card.email}}
     </span>
 
-    <span ng-show="edit">
+    <span id="edit" ng-if="edit">
         <input ng-model="card.name">
         <input ng-model="card.surname">
         <input ng-model="card.email">
     </span>
 
 
-    <div class="text-right">
+    <div id="buttons" class="text-right" ng-if="canEdit">
         <span class="btn btn-info" ng-show="!edit"
               ng-click="switchEditMode()">
             <i class="glyphicon glyphicon-edit"></i>

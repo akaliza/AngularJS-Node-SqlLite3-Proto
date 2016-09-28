@@ -15,14 +15,7 @@
                id="surname"
                placeholder="Surname">
     </div>
-    <div class="form-group">
-        <label for="position">Position</label>
-        <input type="text"
-               ng-model="model.position"
-               class="form-control"
-               id="position"
-               placeholder="Position">
-    </div>
+
     <div class="form-group">
         <label for="email">Email</label>
         <input type="email"
@@ -31,22 +24,31 @@
                id="email"
                placeholder="Email">
     </div>
-    <div class="form-group">
-        <label for="phone">Phone No.</label>
-        <input type="text"
-               ng-model="model.phone"
-               class="form-control"
-               id="phone"
-               placeholder="Phone">
-    </div>
-        <span class="pull-right btn btn-info"
-              ng-hide="model.id"
-              ng-click="save()">Add</span>
 
-        <span class="pull-right btn btn-info"
-              ng-show="model.id"
-              ng-click="save()">Save</span>
+    <span class="pull-right btn btn-info"
+          ng-hide="model.id"
+          ng-click="save()">Add</span>
+
+    <span class="pull-right btn btn-info"
+          ng-show="model.id"
+          ng-click="save()">Save</span>
 </form>
+
 <div class="clearfix"></div>
 
-<span user-card card="model"></span>
+
+
+<div class="panel panel-danger">
+    <div class="panel-heading">Title</div>
+    <div class="panel-body">
+        <span user-card card="model" can-edit="false"></span>
+    </div>
+</div>
+
+
+
+
+
+
+
+
