@@ -14,6 +14,12 @@ angular
                 controller: 'ParticipantsListController'
             })
             .state({
+                name: 'main.participants.cardlist',
+                url: '/cardlist',
+                templateUrl: 'sources/participants/cardlist/cardlist.participants.template.html',
+                controller: 'ParticipantsListController'
+            })
+            .state({
                 name: 'main.participants.add',
                 url: '/add',
                 resolve: {
